@@ -76,7 +76,7 @@ php artisan dusk:install
 <a name="managing-chromedriver-installations"></a>
 ### 管理 ChromeDriver 安裝
 
-If you would like to install a different version of ChromeDriver than what is installed by Laravel Dusk via the `dusk:install` command, you may use the `dusk:chrome-driver` command:
+如果你想要安裝其他版本的 ChromeDriver，你可以使用 `dusk:chrome-driver` 的指令:
 
 ```shell
 # Install the latest version of ChromeDriver for your OS...
@@ -93,14 +93,15 @@ php artisan dusk:chrome-driver --detect
 ```
 
 > **Warning**
-> Dusk requires the `chromedriver` binaries to be executable. If you're having problems running Dusk, you should ensure the binaries are executable using the following command: `chmod -R 0755 vendor/laravel/dusk/bin/`.
+> Dusk 要求 `chromedrive` 的二進位文件是可執行的。如果你持行 Dusk 時遇到了問題，你應該使用以下的指令確保二進位文件是可執行的: `chmod -R 0755 vendor/laravel/dusk/bin/`。
 
 <a name="using-other-browsers"></a>
 ### 使用其他瀏覽器
 
-By default, Dusk uses Google Chrome and a standalone [ChromeDriver](https://sites.google.com/chromium.org/driver) installation to run your browser tests. However, you may start your own Selenium server and run your tests against any browser you wish.
+預設上，Dusk 使用 Google Chrome 以及一個獨立安裝的 [ChromeDriver](https://sites.google.com/chromium.org/driver) 執行瀏覽器測試。當然，你也可以用你自己的 Seleiym 伺服器，使用任何的瀏覽器進行測試。
 
-To get started, open your `tests/DuskTestCase.php` file, which is the base Dusk test case for your application. Within this file, you can remove the call to the `startChromeDriver` method. This will stop Dusk from automatically starting the ChromeDriver:
+首先，打開你的 `tests/DuskTestCase.php` 檔案 (which is the base Dusk test case for your application)。在這個檔案裏面，你可以移除呼叫`startChromeDriver`這個方法的那一行。這樣 Dusk 就不會自動啟動 ChromeDriver。
+
 
     /**
      * Prepare for Dusk test execution.
@@ -112,20 +113,7 @@ To get started, open your `tests/DuskTestCase.php` file, which is the base Dusk 
     {
         // static::startChromeDriver();
     }
-
-Next, you may modify the `driver` method to connect to the URL and port of your choice. In addition, you may modify the "desired capabilities" that should be passed to the WebDriver:
-
-    /**
-     * Create the RemoteWebDriver instance.
-     *
-     * @return \Facebook\WebDriver\Remote\RemoteWebDriver
-     */
-    protected function driver()
-    {
-        return RemoteWebDriver::create(
-            'http://localhost:4444/wd/hub', DesiredCapabilities::phantomjs()
-        );
-    }
+下一步，你可以修改 `driver`這個方法來自己決定要連接到哪個 URL 與 port。另外，你也可以修改會傳給 WebDriver 的 DesiredCapabilities。
 
 <a name="getting-started"></a>
 ## 入門
@@ -133,7 +121,7 @@ Next, you may modify the `driver` method to connect to the URL and port of your 
 <a name="generating-tests"></a>
 ### 產生測試
 
-To generate a Dusk test, use the `dusk:make` Artisan command. The generated test will be placed in the `tests/Browser` directory:
+如果要產生 Dusk 測試，使用 `dusk:make` Artisan 指令。被產生的測試會放在 `tests/Browser` 這個資料夾當中:
 
 ```shell
 php artisan dusk:make LoginTest
@@ -141,8 +129,7 @@ php artisan dusk:make LoginTest
 
 <a name="migrations"></a>
 ### 資料庫遷移
-
-Most of the tests you write will interact with pages that retrieve data from your application's database; however, your Dusk tests should never use the `RefreshDatabase `trait. The `RefreshDatabase` trait leverages database transactions which will not be applicable or available across HTTP requests. Instead, use the `DatabaseMigrations` trait, which re-migrates the database for each test:
+大多數你寫的測試會和從你應用資料庫當中存取資料的頁面做互動；但請不要再 Dusk 測試當中使用 `RefreshDatabase` trait. `RefreshDatabase` trait 會使用到資料庫 transactions 的功能，但是這個功能對 HTTP requests 來說並不可行與可用。請使用 `DatabaseMigrations` trait，他會在每次測試時重新遷移資料庫：
 
     <?php
 
