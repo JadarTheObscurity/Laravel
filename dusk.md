@@ -146,34 +146,34 @@ php artisan dusk:make LoginTest
     }
 
 > **Warning**
-> SQLite in-memory databases may not be used when executing Dusk tests. Since the browser executes within its own process, it will not be able to access the in-memory databases of other processes.
+> SQLite in-memory 資料庫在執行 Dusk 測試時可能無法使用。因為瀏覽器是在自己的 process，因此它無法存取在其他 process 當中在記憶體內的資料庫。
 
 <a name="running-tests"></a>
 ### 執行測試
 
-To run your browser tests, execute the `dusk` Artisan command:
+如果要開始瀏覽器測試，執行 `dusk` Artisan 指令：
 
 ```shell
 php artisan dusk
 ```
-
-If you had test failures the last time you ran the `dusk` command, you may save time by re-running the failing tests first using the `dusk:fails` command:
-
+如果上次你執行 `dusk` 指令時失敗了，你可以透過執行 `dusk:falis` 指令重新跑一次失敗的測試，這樣可以節省時間：
 ```shell
 php artisan dusk:fails
 ```
 
-The `dusk` command accepts any argument that is normally accepted by the PHPUnit test runner, such as allowing you to only run the tests for a given [group](https://phpunit.readthedocs.io/en/9.5/annotations.html#group):
+`dusk` 這個指令可以接受任何一般來說 PHPUnit 可以接受的引數，像是讓你只給特定的 [group](https://phpunit.readthedocs.io/en/9.5/annotations.html#group) 跑測試：
 
 ```shell
 php artisan dusk --group=foo
 ```
-
 > **Note**
-> If you are using [Laravel Sail](/docs/{{version}}/sail) to manage your local development environment, please consult the Sail documentation on [configuring and running Dusk tests](/docs/{{version}}/sail#laravel-dusk).
+> 如果你使用 [Laravel Sail](/docs/{{version}}/sail) 管理你的本機開發環境，請參考 Sail 文件的 [configuring and running Dusk tests](/docs/{{version}}/sail#laravel-dusk)
+
 
 <a name="manually-starting-chromedriver"></a>
 #### Manually Starting ChromeDriver
+
+預設上，Dusk 會自動地試圖啟動 ChromeDriver。如果
 
 By default, Dusk will automatically attempt to start ChromeDriver. If this does not work for your particular system, you may manually start ChromeDriver before running the `dusk` command. If you choose to start ChromeDriver manually, you should comment out the following line of your `tests/DuskTestCase.php` file:
 
